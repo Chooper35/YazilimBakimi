@@ -34,8 +34,8 @@ include('includes/database.php');
                 <div class="productName mb-1"> <?=$product['product_name']?> </div>
                 <div class="productDetails mb-1"> <?=$product['details']?> </div>
                 <div class="productPrices"> <?=$product['price']?> </div>
-                <button id="<?=$product['id']?>" class="btn btn-primary" onclick="addToChart(this.id, <?=$product['id']?>)" <?php if(isset($_SESSION['cart']) && in_array($product['id'], $_SESSION['cart'])) echo 'style="display:none"' ?>> Add to Chart </button>
-                <button <?php if(isset($_SESSION['cart']) && in_array($product['id'], $_SESSION['cart'])) echo 'style="display:inline"'; else echo 'style="display:none"'; ?>  id="<?=$product['id']?>remove" class="btn btn-danger" onclick="removeFromChart(this.id, <?=$product['id']?>)"> Remove From Chart </button>
+                <button id="<?=$product['id']?>" class="btn btn-primary mt-3 mb-3" onclick="addToChart(this.id, <?=$product['id']?>)" <?php if(isset($_SESSION['cart']) && in_array($product['id'], $_SESSION['cart'])) echo 'style="display:none"' ?>> Add to Chart </button>
+                <button <?php if(isset($_SESSION['cart']) && in_array($product['id'], $_SESSION['cart'])) echo 'style="display:inline"'; else echo 'style="display:none"'; ?>  id="<?=$product['id']?>remove" class="btn btn-danger mt-3 mb-3" onclick="removeFromChart(this.id, <?=$product['id']?>)"> Remove From Chart </button>
             </div>
 
         <?php
