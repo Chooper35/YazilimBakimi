@@ -10,5 +10,8 @@ if(isset($_POST['productId'])) {
         } else
             return false;
     }
+    if(isset($_SESSION['productCountOnChart'])) {
+        $_SESSION['productCountOnChart']--;
+    } 
     return false;
 }

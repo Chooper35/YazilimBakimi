@@ -45,14 +45,14 @@ if (isset($_POST['email'], $_POST['password'])) {
             <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
                 <input name="email" type="email" class="form-control" id="exampleInputEmail1" onfocus="this.value=''"
-                    aria-describedby="emailHelp" placeholder="Enter your email address..">
+                    aria-describedby="emailHelp" placeholder="Enter your email address.." required>
                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
                     else.</small>
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Password</label>
-                <input name="password" type="password" class="form-control" id="exampleInputPassword1" onfocus="this.value=''"
-                    placeholder="Enter your password..">
+                <input name="password" type="password" class="form-control" id="exampleInputPassword1"
+                    onfocus="this.value=''" placeholder="Enter your password..">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
             <a href="forgotPassword.php" class="ml-3" style="text-decoration: none; color: white" href=""> I Forgot my

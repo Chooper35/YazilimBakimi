@@ -7,7 +7,9 @@ if(isset($_POST['productId'])) {
         $_SESSION['cart'] = array();
     }
     array_push($_SESSION['cart'], $_POST['productId']);
+    if(isset($_SESSION['productCountOnChart'])) {
+        $_SESSION['productCountOnChart']++;
+    } else
+        $_SESSION['productCountOnChart'] = 1;
     return true;
 }
-
-

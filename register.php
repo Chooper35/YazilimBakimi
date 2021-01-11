@@ -58,11 +58,9 @@ if (isset($_POST['fullName'], $_POST['phoneNumber'], $_POST['email'], $_POST['pa
                     print '<div class="container col-6 mt-5"><div class="alert alert-success" role="alert">
                             You are registered successfully.</div></div>';
                 }
-                else {
-                    echo $insert;
-                }
             } catch (PDOException $e) {
-                throw $e;
+                print '<div class="container col-6 mt-5"><div class="alert alert-danger" role="alert">'.$e->getMessage().'
+                            </div></div>';
             }
         }
     }
@@ -75,33 +73,33 @@ if (isset($_POST['fullName'], $_POST['phoneNumber'], $_POST['email'], $_POST['pa
             <div class="form-group">
                 <label for="fullName">Full Name</label>
                 <input name="fullName" type="text" class="form-control" id="fullName"
-                    placeholder="Enter your full name..">
+                    placeholder="Enter your full name.." required>
             </div>
             <div class="form-group">
                 <label for="phoneNumber">Phone Number</label>
-                <input name="phoneNumber" type="text" class="form-control" id="phoneNumber"
-                    placeholder="Enter phone number..">
+                <input name="phoneNumber" class="form-control" id="phoneNumber" placeholder="Enter phone number.."
+                    type="text" pattern="[0-9]{11}" onKeyPress="if(this.value.length==11) return false;" required>
             </div>
             <div class="form-group">
                 <label for="emailAddress">Email address</label>
                 <input name="email" type="email" class="form-control" id="emailAddress" aria-describedby="emailHelp"
-                    placeholder="Enter your email address..">
+                    placeholder="Enter your email address.." required>
                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
                     else.</small>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
                 <input name="password" type="password" class="form-control" id="password"
-                    placeholder="Enter your password..">
+                    placeholder="Enter your password.." required>
             </div>
             <div class="form-group">
                 <label for="passwordCheck">Password Again</label>
                 <input name="passwordCheck" type="password" class="form-control" id="passwordCheck"
-                    placeholder="Enter your password again..">
+                    placeholder="Enter your password again.." required>
             </div>
             <div class="form-group">
                 <label for="userSecurtityQuestion">Security Question</label>
-                <select class="form-control" name="userSecurityQuestion" id="userSecurtityQuestion">
+                <select class="form-control" name="userSecurityQuestion" id="userSecurtityQuestion" required>
                     <option value="0">What is your favorite color?</option>
                     <option value="1">What is your lucky number?</option>
                     <option value="2">Who is your best friend?</option>
@@ -111,7 +109,7 @@ if (isset($_POST['fullName'], $_POST['phoneNumber'], $_POST['email'], $_POST['pa
             <div class="form-group">
                 <label for="userSecurityQuestionAnswer">Your Answer</label>
                 <input name="userSecurityQuestionAnswer" type="text" class="form-control"
-                    id="userSecurityQuestionAnswer" placeholder="Enter your answer..">
+                    id="userSecurityQuestionAnswer" placeholder="Enter your answer.." required>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>

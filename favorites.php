@@ -1,4 +1,3 @@
-<!doctype html>
 <html lang="en">
 
 <head>
@@ -10,7 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
         integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <title>Shop App</title>
+    <title>Cart</title>
 </head>
 
 <body>
@@ -20,20 +19,28 @@ ob_start();
 session_start();
 include('includes/navigationBar.php');
 include('includes/database.php');
+
+if(!isset($_SESSION['user']))
+    header('Location: /');
 ?>
 
     <div class="container col-9 mt-4">
-        <h2 class="text-center"> Products </h2>
-
+        <h2 class="text-center"> Favorite Products </h2>
         <div class="col-12 ml-auto mr-auto mt-4">
             <div class="row text-center">
                 <?php
-            $query = $db->query(/** @lang text */ "SELECT * FROM products")->fetchAll(PDO::FETCH_ASSOC);
+                $userId = $_SESSION['user'];
+                $favoritedProducts = $db->query(/** @lang text */ "SELECT * FROM favorites WHERE `user_id` = $userId")->fetchAll(PDO::FETCH_ASSOC);
+                    if ($favoritedProducts) :
+                    foreach($favoritedProducts as $favorited):
+                    $id = $favorited['product_id'];
+                    $query = $db->query(/** @lang text */ "SELECT * FROM products WHERE id = $id")->fetchAll(PDO::FETCH_ASSOC);
             if ($query) :
                 foreach ($query as $product) :
                 $favorited = false;
         ?>
-                <div class="col-12 col-md-6 col-lg-4 border" style="position:relative;">
+                <div id="productDiv<?=$product['id']?>" class="col-12 col-md-6 col-lg-4 border"
+                    style="position:relative;">
                     <?php 
                         if(isset($_SESSION['user'])) {
                             $productId = $product['id']; 
@@ -55,7 +62,7 @@ include('includes/database.php');
                     </button>
 
                     <button id="favfavorited<?=$product['id']?>" <?php if(isset($_SESSION['user'])) { ?>
-                        onclick="unFavoriteProduct(this.id, <?=$_SESSION['user']?>,<?=$product['id']?>)"
+                        onclick="unFavoriteProductAndRemove(this.id, <?=$_SESSION['user']?>,<?=$product['id']?>)"
                         <?php } else { ?> onclick="alert('Please login first!')" <?php } ?>
                         class="material-icons m-0 p-0" style="position:absolute; font-size:28px !important; top:20px; right:20px; cursor:pointer; border:none; background-color: transparent;
                         <?php if(!$favorited){ ?> display:none; <?php } else echo "display:inline-block" ?>">
@@ -80,18 +87,23 @@ include('includes/database.php');
                 <?php
             endforeach;
             else :
+                print '<div class="container col-6 mt-5"><div class="alert alert-danger" role="alert">
+                        There is not any favorited products.
+                        </div></div>';
+                endif;
+            
+        endforeach;
+        else :
             print '<div class="container col-6 mt-5"><div class="alert alert-danger" role="alert">
-                    Username or password wrong!
+                    There is not any favorited products.
                     </div></div>';
             endif;
         ?>
 
             </div>
         </div>
+
     </div>
-
-
-    <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"
@@ -101,7 +113,6 @@ include('includes/database.php');
         integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
     </script>
     <script src="script.js"></script>
-
 </body>
 
 </html>
